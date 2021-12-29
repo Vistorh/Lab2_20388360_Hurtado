@@ -16,7 +16,8 @@ getFechaD([D,_,_],D).
 getFechaM([_,M,_],M).
 getFechaY([_,_,Y],Y).
 
-/* Usuarios
+/* 
+TDA Usuarios
 lista con la forma
 [ID,nombre,pass,fecha,publicaciones]
 integer x stringx x pass x fecha x lista
@@ -35,7 +36,7 @@ getUserFecha([_,_,_,Fecha,_],Fecha).
 getUserPubli([_,_,_,_,Posts],Posts).
 
 /*
-Paradigmadocs
+TDA Paradigmadocs
 lista de la forma
 [nombre,fecha,usuarios,publicaciones,usuarioOnline]
 string x fecha x lista x lista x integer
@@ -55,5 +56,26 @@ getFechaRedSocial([_,Fecha,_,_,_],Fecha).
 getUsuariosRedSocial([_,_,Usuarios,_,_],Usuarios).
 getPublicacionesRedSocial([_,_,_,Publicaciones,_],Publicaciones).
 getUsuarioOnline([_,_,_,_,UsuarioOnline],UsuarioOnline).
+
+/*
+TDA Publicaciones
+lista de forma
+[ID,formato texto, reacciones,comentarios,fecha,tags,shared]
+integer x string x lista x lista x fecha x lista x lista
+*/
+% CONSTRUCTOR
+crearPublicacion(ID,Texto,Reacts,Comments,Fecha,Tags,Shared,Salida):-
+    number(ID),not(ID<0),not(ID=0),string(Texto),
+    is_list(Reacts),is_list(Comments),is_list(Tags),is_list(Shared),
+    Salida = [ID,Texto,Reacts,Comments,Fecha,Tags,Shared].
+
+% SELECTORES
+getPublicacionID([ID,_,_,_,_,_,_],ID).
+getPublicacionTexto([_,Texto,_,_,_,_,_],Texto).
+getPublicacionReacts([_,_,Reacts,_,_,_,_],Reacts).
+getPublicacionComments([_,_,_,Comments,_,_,_],Comments).
+getPublicacionFecha([_,_,_,_,Fecha,_,_],Fecha).
+getPublicacionTags([_,_,_,_,_,Tags,_],Tags).
+getPublicacionShared([_,_,_,_,_,_,Shared],Shared).
 
 
