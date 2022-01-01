@@ -46,21 +46,21 @@ TDA Paradigmadocs
 lista de la forma
 [nombre,fecha,usuarios,publicaciones,usuarioOnline]
 string x fecha x lista x lista x integer
-fecha(5,10,2021,F),crearRS("Googledocs",F,DSout).
+fecha(5,10,2021,F),crearPL("Googledocs",F,DSout).
 */
 % CONSTRUCTOR
-crearRS(Nombre,Fecha,SOut):-
-    crearRedSocial(Nombre,Fecha,[],[],0,SOut).
+crearPL(Nombre,Fecha,SOut):-
+    crearPlataforma(Nombre,Fecha,[],[],0,SOut).
 
-crearRedSocial(Nombre,Fecha,Usuarios,Publicaciones,UsuarioOnline,SOut):-
+crearPlataforma(Nombre,Fecha,Usuarios,Publicaciones,UsuarioOnline,SOut):-
     string(Nombre),number(UsuarioOnline),is_list(Fecha),is_list(Usuarios),is_list(Publicaciones),
     SOut = [Nombre,Fecha,Usuarios,Publicaciones,UsuarioOnline].
 
 % SELECTORES
-getNombreRedSocial([Nombre,_,_,_,_],Nombre).
-getFechaRedSocial([_,Fecha,_,_,_],Fecha).
-getUsuariosRedSocial([_,_,Usuarios,_,_],Usuarios).
-getPublicacionesRedSocial([_,_,_,Publicaciones,_],Publicaciones).
+getNombrePlataforma([Nombre,_,_,_,_],Nombre).
+getFechaPlataforma([_,Fecha,_,_,_],Fecha).
+getUsuariosPlataforma([_,_,Usuarios,_,_],Usuarios).
+getPublicacionesPlataforma([_,_,_,Publicaciones,_],Publicaciones).
 getUsuarioOnline([_,_,_,_,UsuarioOnline],UsuarioOnline).
 
 
@@ -308,21 +308,31 @@ buscar_comentario([_|T],ID):-
 FUNCIONES                                                
 */
 
-% Dominio: red social x fecha x string x string x RedSocial 
-% Descripcion: Funcion que toma una red social y permite registrar un nuevo usuario
-% fecha(20,11,2021,F),crearRS("Twitter",F,RedSocial1),socialNetworkRegister(RedSocial1,F,"UsuarioNuevo","Contrasena",RedSocial2).
-% fecha(20,11,2021,F),crearRS("Twitter",F,RedSocial1),socialNetworkRegister(RedSocial1,F,"UsuarioDuplicado","Duplicado",RedSocial2),socialNetworkRegister(RedSocial2,F,"UsuarioDuplicado","Contrasena",RedSocial3).
-% fecha(20,11,2021,F),crearRS("Twitter",F,RedSocial1),socialNetworkRegister(RedSocial1,F,"User1","Pass1",RedSocial2),socialNetworkRegister(RedSocial2,F,"User2","Pass2",RedSocial3).
-socialNetworkRegister(RSin,Fecha,Username,Password,RSout):-
+% Dominio: paradigmadocs x fecha x string x string x PaDocs 
+% Descripcion: Funcion que toma una plataforma y permite registrar un nuevo usuario
+paradigmaDocsRegister(RSin,Fecha,Username,Password,RSout):-
     string(Username),
     string(Password),
-    getNombreRedSocial(RSin,Nombre),
-    getFechaRedSocial(RSin,FechaRS),
-    getUsuariosRedSocial(RSin,Usuarios),
-    getPublicacionesRedSocial(RSin,Publicaciones),
+    getNombrePlataforma(RSin,Nombre),
+    getFechaPlataforma(RSin,FechaRS),
+    getUsuariosPlataforma(RSin,Usuarios),
+    getPublicacionesPlataforma(RSin,Publicaciones),
     getUsuarioOnline(RSin,UsuarioOnline),
     not(buscarUsuario(Usuarios,Username)),!,
     id_counter(Usuarios,ID),
     crearUsuario(ID,Username,Password,Fecha,[],[],NuevoUsuario),
     append(Usuarios,[NuevoUsuario],UsuariosNuevos),
-    crearRedSocial(Nombre,FechaRS,UsuariosNuevos,Publicaciones,UsuarioOnline,RSout).
+    crearPlataforma(Nombre,FechaRS,UsuariosNuevos,Publicaciones,UsuarioOnline,RSout).
+
+% Dominio: plataforma x string x string x paradigmadocs
+% Descripcion: funcion que permite iniciar sesion a un usuario en una plataforma
+paradigmaDocsLogin(RSin,Username,Password,RSout):-
+    string(Username),
+    string(Password),
+    getNombrePlataforma(RSin,Nombre),
+    getFechaPlataforma(RSin,FechaRS),
+    getUsuariosPlataforma(RSin,Usuarios),
+    buscarUsuarioPassword(Usuarios,Username,Password),!,
+    getPublicacionesPlataforma(RSin,Publicaciones),
+    buscarIDUsuario(Usuarios,Username,ID),!,
+    crearPlataforma(Nombre,FechaRS,Usuarios,Publicaciones,ID,RSout).
