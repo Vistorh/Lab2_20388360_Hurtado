@@ -1,7 +1,6 @@
 /*
-TDA Fecha
 
-
+TDA FECHA
 lista con la forma
 [DD,MM,YYYY] donde todos sus valores son numeros
 */
@@ -17,6 +16,8 @@ fecha(D,M,Y,Salida):-
 getFechaD([D,_,_],D).
 getFechaM([_,M,_],M).
 getFechaY([_,_,Y],Y).
+
+
 
 /* 
 TDA Usuarios
@@ -293,7 +294,7 @@ publicacion_to_string(Publicacion,Retorno):-
     string_concat(S12,TagsString,S13),
     S16 = Retorno.
 
-/*
+
 % Descripcion: Funcion que permite saber si una ID es un comentario de una publicacion
 % Dominio: list x integer
 buscar_comentario([H|_],ID):-
@@ -301,7 +302,7 @@ buscar_comentario([H|_],ID):-
     buscarID(Comments,ID).
 buscar_comentario([_|T],ID):-
     buscar_comentario(T,ID).    
-*/
+
 
 
 /*
@@ -310,6 +311,7 @@ FUNCIONES
 
 % Dominio: paradigmadocs x fecha x string x string x PaDocs 
 % Descripcion: Funcion que toma una plataforma y permite registrar un nuevo usuario
+%fecha(20,11,2021,F),crearPL("Google",F,Plataforma1),paradigmaDocsRegister(Plataforma1,F,"UsuarioNuevo","Contrasena",Plataforma2).
 paradigmaDocsRegister(RSin,Fecha,Username,Password,RSout):-
     string(Username),
     string(Password),
@@ -320,7 +322,7 @@ paradigmaDocsRegister(RSin,Fecha,Username,Password,RSout):-
     getUsuarioOnline(RSin,UsuarioOnline),
     not(buscarUsuario(Usuarios,Username)),!,
     id_counter(Usuarios,ID),
-    crearUsuario(ID,Username,Password,Fecha,[],[],NuevoUsuario),
+    crearUsuario(ID,Username,Password,Fecha,[],NuevoUsuario),
     append(Usuarios,[NuevoUsuario],UsuariosNuevos),
     crearPlataforma(Nombre,FechaRS,UsuariosNuevos,Publicaciones,UsuarioOnline,RSout).
 
@@ -336,3 +338,5 @@ paradigmaDocsLogin(RSin,Username,Password,RSout):-
     getPublicacionesPlataforma(RSin,Publicaciones),
     buscarIDUsuario(Usuarios,Username,ID),!,
     crearPlataforma(Nombre,FechaRS,Usuarios,Publicaciones,ID,RSout).
+
+
