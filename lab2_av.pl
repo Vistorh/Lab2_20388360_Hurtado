@@ -340,3 +340,34 @@ paradigmaDocsLogin(RSin,Username,Password,RSout):-
     crearPlataforma(Nombre,FechaRS,Usuarios,Publicaciones,ID,RSout).
 
 
+% Dominio: plataforma x fecha x string x string list x paradigmadocs
+% Descripcion: funcion que permite a un usuario loggeado en la red social realizar una publicacion
+paradigmaDocsPublicacion(RSin,Fecha,Titulo,Texto,Permisos,RSout):-
+    string(Texto),
+    is_list(Permisos),
+    getNombrePlataforma(RSin,NombreRS),
+    getFechaPlataforma(RSin,FechaRS),
+    getUsuariosPlataforma(RSin,Usuarios),
+    getPublicacionesPlataforma(RSin,Publicaciones),
+    getUsuarioOnline(RSin,UsuarioOnline),
+    (UsuarioOnline>0),
+    buscarEtiquetados(Permisos,Usuarios),
+    id_counter(Publicaciones,IDpublicacion),
+    % Creo la publicacion
+    crearPublicacion(IDpublicacion,Fecha,Titulo,Texto,Permisos,PublicacionNueva),
+    % busco al usuario
+    id_to_usuario(Usuarios,UsuarioOnline,Autor),
+    % obtengo sus datos
+    getNombre(Autor,AutorUsername),
+    getPass(Autor,AutorPassword),
+    getUserFecha(Autor,AutorFecha),
+    getUserPubli(Autor,AutorPosts),
+    % Agrego la publicacion nueva a la lista de publicaciones de la red social y del autor
+    append(Publicaciones,[PublicacionNueva],PublicacionesNuevas),
+    append(AutorPosts,[PublicacionNueva],AutorPostsNuevo),
+    eliminar_por_ID(UsuarioOnline,Usuarios,UsuariosNuevos),!,
+    crearUsuario(UsuarioOnline,AutorUsername,AutorPassword,AutorFecha,AutorPostsNuevo,NuevoAutor),
+    append(UsuariosNuevos,[NuevoAutor],UsuariosFinal),
+    crearPlataforma(NombreRS,FechaRS,UsuariosFinal,PublicacionesNuevas,0,RSout).
+
+  
