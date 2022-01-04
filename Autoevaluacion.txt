@@ -1,0 +1,24 @@
+Requerimientos Funcionales
+
+TDAs:  1
+Register:  1
+Login: 1
+Create: 1
+Share: 1
+add:0.25
+restoreVersion: 0
+revokeAllAccesses: 0
+paradigmadocs-->string: 0
+
+
+
+Requerimientos no funcionales -> se ve mejor en el PDF
+
+* Se cumplió con el requerimiento de utilizar solo lenguaje prolog.
+* La versión usada es la 8.2.4.
+* Documentacion:  Todas las funciones cuentan con su encabezado que corresponde a su dominio y descripción de la funcion
+* Se respeta el dominio y recorrido de cada función, además de comentar cual será el dom y rec de cada 1.
+* Se cuenta con 1 archivo el cual es el main.
+* Historial de trabajo en Github = 0.75
+* Al final del Main se encuentran los códigos de ejemplo para cada función con 3 ejemplos cada 1.
+* Cada función cumple con sus prerrequisitos.
